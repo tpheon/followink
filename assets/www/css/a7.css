@@ -1,0 +1,58 @@
+#gear
+{
+width:40px;
+height:40px;
+background:url(http://www.cs.cmu.edu/~junggon/tools/gear.png) 0 0; 
+}
+#title
+{
+color:#FF3300;
+font-family:"Arial", Helvetica, sans-serif;
+}
+.centered{
+margin: 0 auto;
+}
+canvas
+{
+    margin:0 auto;
+    border:6px solid black;
+}
+.mainscreen
+{
+    position:relative;
+    left:94px;
+}
+.slid{
+    position:relative;
+    left:60px;
+    width:400px;
+}
+.thumbnail
+{
+    float:left;
+    width:100px;
+    height:100px;
+    position:relative;
+    left:-60px;
+    margin:10px; 
+    z-index: 2;
+}
+.under
+{
+    position:relative;
+    left:-400px;
+    top:+10px;
+    margin:10px;
+    width:100px;
+    height:100px;
+}
+.map-canvas {
+    height: 256px;
+    width: 384px;
+    margin-top: 0.6em;
+    margin-left:auto;
+    margin-right:auto;
+}
+.overmap{
+    position:absolute;
+}

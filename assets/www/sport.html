@@ -1,0 +1,70 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>RunInk: Sport Mode</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />	
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<script src="js/a8.js"></script>
+	<script src="js/gpixel.js"></script>
+	<link rel="stylesheet" href="css/gmap.css" />
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFxxx-iocJcrq4IunXhHWOsbnHVxmzD64&sensor=false">
+    </script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.8.min.js"></script>
+	<link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
+	<script type="text/javascript" src="js/colorpicker.js"></script>
+    <style>
+    .overmap{
+        position:absolute;
+        left: +500px;
+    }
+    </style>
+</head> 
+
+<body onload="pinit()" onpageshow="initialize()"> 
+	<div data-role="page">
+	
+		<div data-role="header">
+			<h1>Sport Mode</h1>
+		</div>
+		
+		<div data-role="content">
+			<div align="center" class="map-canvas" id="map-canvas"></div>
+			<canvas id="mapvas" height="256" width="384" class="overmap"></canvas>
+    		<div align="center" data-role="controlgroup" data-type="horizontal">
+			<!--Gallery-->
+			<button id="gallery" type="button">Gallery</button>
+			<!--Stop-->
+			<button id="stop" type="button" onclick="storeGLocation()">STOP</button>
+			<!--Settings-->
+			<a href="#settingsmenu" data-rel="popup" data-role="button"><div class="label">Settings</div></a>
+				<div data-role="popup" id="settingsmenu">
+					<div data-role="collapsible-set" data-theme="b" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+						<div data-role="collapsible" data-inset="false">
+							<h2>Select Color</h2>
+							<div>
+								<label >Select Color</label>
+								<input type="color" id="colorpicker"  />
+							</div>
+						</div>
+						<div data-role="collapsible" data-inset="false">
+							<h3>Stroke Size</h3>
+							<input type="range" name="strokesize" id="strokesize" min="0" max="100" data-highlight="true" data-mini="true">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div data-role="footer"></div>
+	
+	</div>
+</body>
+</html>
+
+
+
+
+

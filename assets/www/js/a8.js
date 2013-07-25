@@ -6,10 +6,9 @@ function getLocation()
     }
   else{alert("Geolocation is not supported by this browser.");}
   }
-  
+
 function pinit(){
     Parse.initialize("26Otc747ThkgjbDAgkVlFFqSPXfcjtmgWuePVGRA", "x0SDVAE2EYM7Kpg7qmGoSjCqu8ZnBn561GDwtXxN");
-    match_position(document.getElementById('mapvas'),document.getElementById('map-canvas'));
 }
 
 function getPosition(position)
@@ -32,7 +31,7 @@ function saveGLocation(position){
     var loc = new GLoc();
     loc.set("timestamp",position.timestamp);
     var coord = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-    console.log(coord.lat());
+    //console.log(coord.lat());
     loc.set("LatLng",coord);
     loc.set("color","000");
     loc.save(null, {
@@ -197,6 +196,7 @@ function initialize() {
     google.maps.event.addListener(map, 'zoom_changed', function() {
         draw_on_google_map(map);
       });
+    match_position(document.getElementById('mapvas'),document.getElementById('map-canvas'));
     draw_on_google_map(map);
 }
 

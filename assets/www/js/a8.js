@@ -27,11 +27,14 @@ function storeGLocation()
   }
 
 function saveGLocation(position){
-    var GLoc = Parse.Object.extend("GLoc");
-    var loc = new GLoc();
+    var Murloc = Parse.Object.extend("Murloc");
+    var loc = new Murloc();
+    var d = position.timestamp;
+    if(d.type != Date){
+        d = new Date(d);
+    }
     loc.set("timestamp",position.timestamp);
     var coord = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-    //console.log(coord.lat());
     loc.set("LatLng",coord);
     loc.set("color","000");
     loc.save(null, {
@@ -39,7 +42,7 @@ function saveGLocation(position){
             alert("Stored position.");
         },
         error: function(loc, error) {
-            alert('We may have a problem:' + error.description);
+            alert('We may have a problem:' + error.code);
         }
     });
 }
@@ -183,9 +186,17 @@ function match_position(e1,e2){
     e1.style.top=getOffset(e2).top + 'px';
 }
 
-function initialize() {
+function initialize(){
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(map_initialize);
+    }
+    else{alert("Geolocation is not supported by this browser.");}
+}
+
+function map_initialize(position) {
     var mapOptions = {
-        center: new google.maps.LatLng(42.36702, -71.25896),
+        center: new google.maps.LatLng(position.coords.latitude,
+            position.coords.longitude),
         zoom: 10,
         disableDefaultUI: true,
         panControl: false,
@@ -207,8 +218,8 @@ function draw_on_google_map(map){
     var cont = mapvas.getContext("2d");
     cont.clearRect(0, 0, mapvas.width, mapvas.height);
     Parse.initialize("26Otc747ThkgjbDAgkVlFFqSPXfcjtmgWuePVGRA", "x0SDVAE2EYM7Kpg7qmGoSjCqu8ZnBn561GDwtXxN");
-    var Gloc = Parse.Object.extend("GLoc");
-    var query = new Parse.Query(Gloc);
+    var Murloc = Parse.Object.extend("Murloc");
+    var query = new Parse.Query(Murloc);
     var color = "000";
     query.find({ 
       success: function(results) {

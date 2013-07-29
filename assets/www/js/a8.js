@@ -29,11 +29,6 @@ function storeGLocation()
 function saveGLocation(position){
     var Murloc = Parse.Object.extend("Murloc");
     var loc = new Murloc();
-    var d = position.timestamp;
-    if(d.type != Date){
-        d = new Date(d);
-    }
-    loc.set("timestamp",position.timestamp);
     var coord = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
     loc.set("LatLng",coord);
     loc.set("color","000");
@@ -45,14 +40,6 @@ function saveGLocation(position){
             alert('We may have a problem:' + error.code);
         }
     });
-}
-
-
-function saveLocation(position){
-    if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(parseLocation);
-    }
-    else{alert("Geolocation is not supported by this browser.");}
 }
 
 function store(color){
@@ -73,24 +60,6 @@ function store(color){
       }
     });
     
-}
-
-function parseLocation(position)
-{
-    var Location = Parse.Object.extend("Location");
-    var loc = new Location();
-    loc.set("timestamp",position.timestamp);
-    loc.set("latitude",position.coords.latitude);
-    loc.set("longitude",position.coords.longitude);
-    loc.set("color","000");
-    loc.save(null, {
-        success: function(loc) {
-            alert("Stored position.");
-        },
-        error: function(loc, error) {
-            alert('We may have a problem:' + error.description);
-        }
-    });
 }
   
 function showLocation()

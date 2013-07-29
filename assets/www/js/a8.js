@@ -26,7 +26,58 @@ function storeGLocation()
   else{alert("Geolocation is not supported by this browser.");}
   }
 
+
+  function storeGLocation2()
+    {
+        console.log('one');
+    if (navigator.geolocation)
+      {
+      navigator.geolocation.getCurrentPosition(setGLocation);
+      }
+    else{alert("Geolocation is not supported by this browser.");}
+    }
+    
+function setGLocation(position){
+    var session = JSON.parse(sessionStorage.session);
+    var running = false;
+    console.log(running);
+    var time = +new Date();
+    console.log(time);
+    $("#toggle").on("click", function(){
+        console.log("clicked");
+        var running = true;
+        $("#toggle").off("click");
+        $("#toggle").on("click", function(){
+            var coord = new google.maps.LatLng(position.coords.latitude,
+                    position.coords.longitude);
+            session.push(coord);
+            console.log(session);
+        });
+    });
+    $("#stop").on("click", function(){
+        sessionStorage.session = JSON.stringify(session);
+        console.log("stopped");
+    });
+}
+
+function parseGLoc(){
+    var GLoc = Parse.Object.extend("GLoc");
+    var loc = new GLoc();
+    loc.set("JSON_path",sessionStorage.session);
+    loc.set("color","000");
+    loc.set("user",sessionStorage.user);
+    loc.save(null, {
+        success: function(loc) {
+            alert("Stored position.");
+        },
+        error: function(loc, error) {
+            alert('We may have a problem:' + error.code);
+        }
+    });
+}
+
 function saveGLocation(position){
+    console.log(JSON.parse(sessionStorage.session));
     var Murloc = Parse.Object.extend("Murloc");
     var loc = new Murloc();
     var coord = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -166,8 +217,8 @@ function map_initialize(position) {
     var point1 = new google.maps.LatLng(pos.coords.latitude,
         pos.coords.longitude);
     var session = [];
-    session[0] = point1;
-    sessionStorage["session"] = JSON.stringify(session);
+    session.push(point1);
+    sessionStorage.session = JSON.stringify(session);
     var z = 16;
     if(sessionStorage.zoom != null){
         z = parseInt(sessionStorage.zoom);
@@ -186,6 +237,7 @@ function map_initialize(position) {
       });
     match_position(document.getElementById('mapvas'),document.getElementById('map-canvas'));
     draw_on_google_map(map);
+    storeGLocation2();
 }
 
 function draw_on_google_map(map){

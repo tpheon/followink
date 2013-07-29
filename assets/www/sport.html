@@ -33,9 +33,10 @@
 			<canvas id="mapvas" height="256" width="384" class="overmap"></canvas>
     		<div align="center" data-role="controlgroup" data-type="horizontal">
 			<!--Gallery-->
-			<button id="gallery" type="button" onclick="initialize()">Gallery</button>
+			<button id="refresh" type="button" onclick="initialize()">Refresh</button>
 			<!--Stop-->
-			<button id="stop" type="button" onclick="storeGLocation()">STOP</button>
+			<button id="toggle" type="button">POINT</button>
+			<button id="stop" type="button" onclick="parseGLoc()">STOP</button>
 			<!--Settings-->
 			<a href="#settingsmenu" data-rel="popup" data-role="button"><div class="label">Settings</div></a>
 				<div data-role="popup" id="settingsmenu">

@@ -1,8 +1,2 @@
-
-        #map-canvas {
-            height: 256px;
-            width: 384px;
-            margin-top: 0.6em;
-            margin-left:auto;
-            margin-right:auto;
-        }
+.page-map, .ui-content, #map-canvas { width: 100%; height: 100%; padding: 0; }
+#map-canvas { width: min-width: 100%; }

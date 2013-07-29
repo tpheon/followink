@@ -163,8 +163,8 @@ function initialize(){
 }
 
 function map_initialize(position) {
-    var point1 = new google.maps.LatLng(position.coords.latitude,
-        position.coords.longitude);
+    var point1 = new google.maps.LatLng(pos.coords.latitude,
+        pos.coords.longitude);
     var session = [];
     session[0] = point1;
     sessionStorage["session"] = JSON.stringify(session);

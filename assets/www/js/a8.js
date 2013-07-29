@@ -229,3 +229,5 @@ function draw_on_google_map(map){
       }
     });
 }
+
+$('#map_canvas').css('width', '100%');

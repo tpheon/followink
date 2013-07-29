@@ -194,10 +194,18 @@ function initialize(){
 }
 
 function map_initialize(position) {
+    var point1 = new google.maps.LatLng(position.coords.latitude,
+        position.coords.longitude);
+    var session = [];
+    session[0] = point1;
+    sessionStorage["session"] = JSON.stringify(session);
+    var z = 16;
+    if(sessionStorage.zoom != null){
+        z = parseInt(sessionStorage.zoom);
+    }
     var mapOptions = {
-        center: new google.maps.LatLng(position.coords.latitude,
-            position.coords.longitude),
-        zoom: 10,
+        center: point1,
+        zoom: z,
         disableDefaultUI: true,
         panControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP

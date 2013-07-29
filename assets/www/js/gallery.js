@@ -28,5 +28,7 @@ function show(){
 
 function set_user(){
     sessionStorage.user = ($('#user').val());
+    sessionStorage.zoom = ($('#ranger').val());
+    console.log(sessionStorage.zoom);
     document.getElementById("prompt").innerHTML += sessionStorage.user;
 }

@@ -35,14 +35,17 @@ function setGLocation(position){
             console.log(session);
         });
     });
+    $("#stop").off("click");
     $("#stop").on("click", function(){
         sessionStorage.session = JSON.stringify(session);
+        parseGLoc();
     });
 }
 
 function parseGLoc(){
     var GLoc = Parse.Object.extend("GLoc");
     var loc = new GLoc();
+    console.log("something");
     loc.set("JSON_path",sessionStorage.session);
     loc.set("color","000");
     loc.set("user",sessionStorage.user);
@@ -95,17 +98,23 @@ function store(color){
 
 function initialize(){
     if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(map_initialize);
+        navigator.geolocation.getCurrentPosition(draw_initialize);
     }
     else{alert("Geolocation is not supported by this browser.");}
 }
 
-function map_initialize(position) {
+function draw_initialize(position) {
     var point1 = new google.maps.LatLng(position.coords.latitude,
         position.coords.longitude);
     var session = [];
     session.push(point1);
     sessionStorage.session = JSON.stringify(session);
+    map_initialize(session, true);
+}
+
+function map_initialize(set, drawing){
+    var point1 = new google.maps.LatLng(set[0].jb,
+        set[0].kb);
     var z = 16;
     if(sessionStorage.zoom != null){
         z = parseInt(sessionStorage.zoom);
@@ -130,13 +139,75 @@ function map_initialize(position) {
         $('#mapvas').width(w);
         $('#mapvas').height($('#map-canvas').height());
         $('#mapvas').offset($('#map-canvas').offset());
+        console.log($('#mapvas').height());
         pinit();
-        google.maps.event.addListener(map, 'zoom_changed', function() {
-            draw_on_google_map(map);
-        });
-        draw_on_google_map(map);
-    }); 
-    storeGLocation2();
+        if(drawing){
+            google.maps.event.addListener(map, 'zoom_changed', function() {
+                draw_on_google_map(map,set);
+            });
+            draw_on_google_map(map,set);
+        }
+        else{
+            google.maps.event.addListener(map, 'zoom_changed', function() {
+                draw2(map,set);
+            });
+            draw2(map,set);
+        }
+    });
+    if(drawing){
+        storeGLocation2();
+    }
+}
+
+function g_init(){
+    pinit();
+    console.log(sessionStorage.map);
+    var GLoc = Parse.Object.extend("GLoc");
+    var query = new Parse.Query(GLoc);
+    var set;
+    query.equalTo('title',sessionStorage.map);
+    query.find({
+        success: function(results) {
+            set = JSON.parse(results[0].get("JSON_path"));
+            console.log(set[0]);
+            map_initialize(set,false);
+        },
+        error: function(results, error) {
+            alert('We may have a problem:' + error.description);
+        }
+        });  
+}
+
+function draw2(map,set){
+    var numTiles = 1 << map.getZoom();
+    var projection = new MercatorProjection();
+    var mapvas = document.getElementById("mapvas");
+    var cont = mapvas.getContext("2d");
+    cont.clearRect(0, 0, mapvas.width, mapvas.height);
+    console.log(mapvas.height);
+    var color = "000";
+    var wpoint = projection.fromLatLngToPoint(map.getCenter());
+    var lppoint = new google.maps.Point(wpoint.x * numTiles,wpoint.y * numTiles);
+    var ppoint = lppoint;
+    var lastx = mapvas.width/2;
+    var lasty = mapvas.height/2;
+    var dx;
+    var dy;
+    for (var i = 0; i<set.length; i++){
+        wpoint = projection.fromLatLngToPoint(set[i]);
+        ppoint = new google.maps.Point(wpoint.x * numTiles,wpoint.y * numTiles);
+        cont.beginPath();
+        dx = ppoint.x - lppoint.x;
+        dy = ppoint.y - lppoint.y;
+        cont.moveTo((lastx + dx), (lasty + dy));
+        cont.lineTo(lastx,lasty);
+        lastx = lastx + dx;
+        lasty = lasty + dy;
+        lppoint = ppoint;
+        cont.strokeStyle = "#" + color;
+        cont.stroke();
+        cont.closePath();
+    }
 }
 
 function draw_on_google_map(map){

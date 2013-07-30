@@ -14,6 +14,7 @@
 	<link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
 	<script type="text/javascript" src="js/colorpicker.js"></script>
 	<script src="js/gpixel.js"></script>
+		<script src="js/a8.js"></script>
     <style>
     .overmap{
         position:absolute;
@@ -31,7 +32,7 @@
 		<div data-role="content">
 			<div align="center" class="map-canvas" id="map-canvas"></div>
 			<canvas id="mapvas" height="256" width="384" class="overmap"></canvas>
-    		<div align="center" data-role="controlgroup" data-type="horizontal">
+    		<div align="center" data-role="controlgroup" data-type="horizontal" data-mini="true">
 			<!--Gallery-->
 			<button id="refresh" type="button" onclick="initialize()">Refresh</button>
 			<!--Stop-->
@@ -55,12 +56,9 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
-		
-		<div data-role="footer"></div>
-	
 	</div>
-	<script src="js/a8.js"></script>
 </body>
 </html>
 

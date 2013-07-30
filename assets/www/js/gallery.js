@@ -2,15 +2,15 @@ function load_maps(){
     Parse.initialize("26Otc747ThkgjbDAgkVlFFqSPXfcjtmgWuePVGRA", "x0SDVAE2EYM7Kpg7qmGoSjCqu8ZnBn561GDwtXxN");
     console.log('init');
     var selector = document.getElementById("selector");
-    var Test = Parse.Object.extend("Test");
-    var query = new Parse.Query(Test);
+    var GLoc = Parse.Object.extend("GLoc");
+    var query = new Parse.Query(GLoc);
     var content = "";
     query.find({
         success: function(results) {
             console.log('found' + results.length);
             for (var i = 0; i<results.length; i++){
-                content += "<option value=\"" + results[i].get('numb') + "\">" + 
-                    results[i].get('info') + "</option>\n";
+                content += "<option value=\"" + results[i].createdAt + "\">" + 
+                    results[i].createdAt + "</option>\n";
             }
             console.log(content);
             selector.innerHTML = content;
@@ -27,7 +27,7 @@ function show(){
 }
 
 function set_user(){
-    sessionStorage.user = ($('#user').val());
+    sessionStorage.user = ($('#user').val()).toLowerCase();
     sessionStorage.zoom = ($('#ranger').val());
     console.log(sessionStorage.zoom);
     document.getElementById("prompt").innerHTML += sessionStorage.user;

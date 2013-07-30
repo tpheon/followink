@@ -120,21 +120,21 @@ function map_initialize(position) {
     var map = new google.maps.Map(document.getElementById("map-canvas"),
         mapOptions);
     $(document).ready(function(){
-       var w = $('#cont').width();
-       w = Math.floor(.8*w);
-       $('#map-canvas').width(w);
-       var h = $('#map-canvas').height();
-       var cstr = "<canvas id=\"mapvas\" width=\""+w+"\" height=\""+h+
+        var w = $('#cont').width();
+        w = Math.floor(.8*w);
+        $('#map-canvas').width(w);
+        var h = $('#map-canvas').height();
+        var cstr = "<canvas id=\"mapvas\" width=\""+w+"\" height=\""+h+
             "\"class=\"overmap\"></canvas>";
-       document.getElementById("canv").innerHTML = cstr;
-       $('#mapvas').width(w);
-       $('#mapvas').height($('#map-canvas').height());
-       $('#mapvas').offset($('#map-canvas').offset());
-       pinit();
-       google.maps.event.addListener(map, 'zoom_changed', function() {
-           draw_on_google_map(map);
-       });
-       draw_on_google_map(map);
+            document.getElementById("canv").innerHTML = cstr;
+        $('#mapvas').width(w);
+        $('#mapvas').height($('#map-canvas').height());
+        $('#mapvas').offset($('#map-canvas').offset());
+        pinit();
+        google.maps.event.addListener(map, 'zoom_changed', function() {
+            draw_on_google_map(map);
+        });
+        draw_on_google_map(map);
     }); 
     storeGLocation2();
 }

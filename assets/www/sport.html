@@ -6,31 +6,26 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />	
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-	<link rel="stylesheet" href="css/gmap.css" />
     <script type="text/javascript"
  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFxxx-iocJcrq4IunXhHWOsbnHVxmzD64&sensor=false">
     </script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.8.min.js"></script>
 	<link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
+	<link rel="stylesheet" href="css/gmap.css" />
 	<script type="text/javascript" src="js/colorpicker.js"></script>
 	<script src="js/gpixel.js"></script>
-    <style>
-    .overmap{
-        position:absolute;
-    }
-    </style>
 </head> 
 
-<body onload="pinit()" onpageshow="initialize()"> 
+<body onpageshow="initialize()"> 
 	<div data-role="page" id="sport" class="page-map">
 	
 		<div data-role="header">
 			<h1>Sport Mode</h1>
 		</div>
 		
-		<div data-role="content">
-			<div align="center" class="map-canvas" id="map-canvas"></div>
-			<canvas id="mapvas" height="256" width="384" class="overmap"></canvas>
+		<div data-role="content" id="cont">
+			<div class="map-canvas" id="map-canvas"></div>
+			<canvas id="mapvas" class="overmap"></canvas>
     		<div align="center" data-role="controlgroup" data-type="horizontal">
 			<!--Gallery-->
 			<button id="refresh" type="button" onclick="initialize()">Refresh</button>
@@ -56,7 +51,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<div data-role="footer"></div>
 	
 	</div>

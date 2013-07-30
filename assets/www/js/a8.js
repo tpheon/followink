@@ -14,7 +14,6 @@ function storeGLocation()
 
   function storeGLocation2()
     {
-        console.log('one');
     if (navigator.geolocation)
       {
       navigator.geolocation.getCurrentPosition(setGLocation);
@@ -25,11 +24,8 @@ function storeGLocation()
 function setGLocation(position){
     var session = JSON.parse(sessionStorage.session);
     var running = false;
-    console.log(running);
     var time = +new Date();
-    console.log(time);
     $("#toggle").on("click", function(){
-        console.log("clicked");
         var running = true;
         $("#toggle").off("click");
         $("#toggle").on("click", function(){
@@ -41,7 +37,6 @@ function setGLocation(position){
     });
     $("#stop").on("click", function(){
         sessionStorage.session = JSON.stringify(session);
-        console.log("stopped");
     });
 }
 
@@ -128,10 +123,13 @@ function map_initialize(position) {
        var w = $('#cont').width();
        w = Math.floor(.8*w);
        $('#map-canvas').width(w);
+       var h = $('#map-canvas').height();
+       var cstr = "<canvas id=\"mapvas\" width=\""+w+"\" height=\""+h+
+            "\"class=\"overmap\"></canvas>";
+       document.getElementById("canv").innerHTML = cstr;
        $('#mapvas').width(w);
        $('#mapvas').height($('#map-canvas').height());
        $('#mapvas').offset($('#map-canvas').offset());
-       console.log($('#mapvas').offset());
        pinit();
        google.maps.event.addListener(map, 'zoom_changed', function() {
            draw_on_google_map(map);

@@ -23,17 +23,11 @@ function storeGLocation()
     
 function setGLocation(position){
     var session = JSON.parse(sessionStorage.session);
-    $("#toggle").on("click", function(){
-        var coord = new google.maps.LatLng(position.coords.latitude,
-                position.coords.longitude);
-        session.push(coord);
-        sessionStorage.session = JSON.stringify(session);
-        console.log(session);
-    });
-    $("#stop").off("click");
-    $("#stop").on("click", function(){
-        parseGLoc();
-    });
+    var coord = new google.maps.LatLng(position.coords.latitude,
+        position.coords.longitude);
+    session.push(coord);
+    sessionStorage.session = JSON.stringify(session);
+    console.log(coord);
 }
 
 function parseGLoc(){
@@ -114,15 +108,24 @@ function map_initialize(set, drawing){
         $('#mapvas').width(w);
         $('#mapvas').height($('#map-canvas').height());
         $('#mapvas').offset($('#map-canvas').offset());
-        console.log($('#mapvas').height());
+        //console.log($('#mapvas').height());
         pinit();
     });
     if(drawing){
+        $("#stop").off("click");
+        $("#stop").on("click", function(){
+            parseGLoc();
+        });
         $("#toggle").off("click");
-        storeGLocation2();
         $("#toggle").on("click", function(){
+            storeGLocation2();
+            console.log("pointed");
             draw2(map,JSON.parse(sessionStorage.session));
         });
+    }
+    else{
+        console.log("loaded");
+        draw2(map,set);
     }
 }
 
@@ -136,7 +139,6 @@ function g_init(){
     query.find({
         success: function(results) {
             set = JSON.parse(results[0].get("JSON_path"));
-            console.log(set[0]);
             map_initialize(set,false);
         },
         error: function(results, error) {
@@ -146,12 +148,12 @@ function g_init(){
 }
 
 function draw2(map,set){
+    console.log(set);
     var numTiles = 1 << map.getZoom();
     var projection = new MercatorProjection();
     var mapvas = document.getElementById("mapvas");
     var cont = mapvas.getContext("2d");
     cont.clearRect(0, 0, mapvas.width, mapvas.height);
-    console.log(mapvas.height);
     var color = "000";
     var wpoint = projection.fromLatLngToPoint(map.getCenter());
     var lppoint = new google.maps.Point(wpoint.x * numTiles,wpoint.y * numTiles);

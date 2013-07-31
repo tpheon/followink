@@ -8,8 +8,8 @@ function load_maps(){
         var GLoc = Parse.Object.extend("GLoc");
         var query = new Parse.Query(GLoc);
         var content = "";
-        console.log(sessionStorage.user.toLowerCase());
-        query.equalTo('user',sessionStorage.user.toLowerCase());
+        console.log(sessionStorage.user);
+        query.equalTo('user',sessionStorage.user);
         query.find({
             success: function(results) {
                 console.log('found' + results.length);

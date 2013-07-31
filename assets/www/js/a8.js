@@ -23,21 +23,15 @@ function storeGLocation()
     
 function setGLocation(position){
     var session = JSON.parse(sessionStorage.session);
-    var running = false;
-    var time = +new Date();
     $("#toggle").on("click", function(){
-        var running = true;
-        $("#toggle").off("click");
-        $("#toggle").on("click", function(){
-            var coord = new google.maps.LatLng(position.coords.latitude,
-                    position.coords.longitude);
-            session.push(coord);
-            console.log(session);
-        });
+        var coord = new google.maps.LatLng(position.coords.latitude,
+                position.coords.longitude);
+        session.push(coord);
+        sessionStorage.session = JSON.stringify(session);
+        console.log(session);
     });
     $("#stop").off("click");
     $("#stop").on("click", function(){
-        sessionStorage.session = JSON.stringify(session);
         parseGLoc();
     });
 }
@@ -49,6 +43,7 @@ function parseGLoc(){
     loc.set("JSON_path",sessionStorage.session);
     loc.set("color","000");
     loc.set("user",sessionStorage.user);
+    loc.set("title",$("#file").val());
     loc.save(null, {
         success: function(loc) {
             alert("Stored position.");
@@ -74,26 +69,6 @@ function saveGLocation(position){
             alert('We may have a problem:' + error.code);
         }
     });
-}
-
-function store(color){
-    saveLocation();
-    var Location = Parse.Object.extend("Location");
-    var query = new Parse.Query(Location);
-    var number;
-    query.first({
-    success: function(object) {
-        alert('got the color' + object.get('color'));
-        object.set('color',color);
-        object.save();
-        number = object.get('objectId');
-        alert('set the color' + object.get('color'));
-      },
-      error: function(object, error) {
-        alert('We may have a problem:' + error.description);
-      }
-    });
-    
 }
 
 function initialize(){
@@ -141,21 +116,13 @@ function map_initialize(set, drawing){
         $('#mapvas').offset($('#map-canvas').offset());
         console.log($('#mapvas').height());
         pinit();
-        if(drawing){
-            google.maps.event.addListener(map, 'zoom_changed', function() {
-                draw_on_google_map(map,set);
-            });
-            draw_on_google_map(map,set);
-        }
-        else{
-            google.maps.event.addListener(map, 'zoom_changed', function() {
-                draw2(map,set);
-            });
-            draw2(map,set);
-        }
     });
     if(drawing){
+        $("#toggle").off("click");
         storeGLocation2();
+        $("#toggle").on("click", function(){
+            draw2(map,JSON.parse(sessionStorage.session));
+        });
     }
 }
 

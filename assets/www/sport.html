@@ -29,8 +29,6 @@
 			<div class="map-canvas" id="map-canvas"></div>
 			<div id="canv"></div>
     		<div align="center" data-role="controlgroup" data-type="horizontal">
-			<!--Gallery-->
-			<button id="refresh" type="button" onclick="initialize()">Refresh</button>
 			<!--Stop-->
 			<button id="toggle" type="button">POINT</button>
 			<button id="stop" type="button">STOP</button>
@@ -38,6 +36,8 @@
 			<a href="#settingsmenu" data-rel="popup" data-role="button"><div class="label">Settings</div></a>
 				<div data-role="popup" id="settingsmenu">
 					<div data-role="collapsible-set" data-theme="b" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>file name</h3>
+                        <input type="text" name="file" id="file" value="something"/>
 						<div data-role="collapsible" data-inset="false">
 							<h2>Select Color</h2>
 							<div>

@@ -2,30 +2,26 @@ function pinit(){
     Parse.initialize("26Otc747ThkgjbDAgkVlFFqSPXfcjtmgWuePVGRA", "x0SDVAE2EYM7Kpg7qmGoSjCqu8ZnBn561GDwtXxN");
 }
 
-function storeGLocation()
-  {
-  if (navigator.geolocation)
-    {
-    navigator.geolocation.getCurrentPosition(saveGLocation);
+function map_point(latLng, color, weight){
+    this.latLng = latLng;
+    this.color = color;
+    this.weight = weight;
+}
+
+function storeGLocation2()
+{
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(setGLocation);
     }
-  else{alert("Geolocation is not supported by this browser.");}
-  }
-
-
-  function storeGLocation2()
-    {
-    if (navigator.geolocation)
-      {
-      navigator.geolocation.getCurrentPosition(setGLocation);
-      }
     else{alert("Geolocation is not supported by this browser.");}
-    }
+}
     
 function setGLocation(position){
     var session = JSON.parse(sessionStorage.session);
     var coord = new google.maps.LatLng(position.coords.latitude,
         position.coords.longitude);
-    session.push(coord);
+    var w = parseInt($('#strokesize').val());
+    session.push(new map_point(coord,"000",w));
     sessionStorage.session = JSON.stringify(session);
     console.log(coord);
 }
@@ -48,23 +44,6 @@ function parseGLoc(){
     });
 }
 
-function saveGLocation(position){
-    console.log(JSON.parse(sessionStorage.session));
-    var Murloc = Parse.Object.extend("Murloc");
-    var loc = new Murloc();
-    var coord = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-    loc.set("LatLng",coord);
-    loc.set("color","000");
-    loc.save(null, {
-        success: function(loc) {
-            alert("Stored position.");
-        },
-        error: function(loc, error) {
-            alert('We may have a problem:' + error.code);
-        }
-    });
-}
-
 function initialize(){
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(draw_initialize);
@@ -76,14 +55,17 @@ function draw_initialize(position) {
     var point1 = new google.maps.LatLng(position.coords.latitude,
         position.coords.longitude);
     var session = [];
-    session.push(point1);
+    var d = new Date();
+    $('#strokesize').val(1);
+    $('#file').val(d.toLocaleDateString() + ", " + d.toLocaleTimeString());
+    session.push(new map_point(point1,"000",1));
     sessionStorage.session = JSON.stringify(session);
     map_initialize(session, true);
 }
 
 function map_initialize(set, drawing){
-    var point1 = new google.maps.LatLng(set[0].jb,
-        set[0].kb);
+    var point1 = new google.maps.LatLng(set[0].latLng.jb,
+        set[0].latLng.kb);
     var z = 16;
     if(sessionStorage.zoom != null){
         z = parseInt(sessionStorage.zoom);
@@ -163,9 +145,11 @@ function draw2(map,set){
     var dx;
     var dy;
     for (var i = 0; i<set.length; i++){
-        wpoint = projection.fromLatLngToPoint(set[i]);
+        wpoint = projection.fromLatLngToPoint(set[i].latLng);
         ppoint = new google.maps.Point(wpoint.x * numTiles,wpoint.y * numTiles);
+        color=set[i].color;
         cont.beginPath();
+        cont.lineWidth=set[i].weight;
         dx = ppoint.x - lppoint.x;
         dy = ppoint.y - lppoint.y;
         cont.moveTo((lastx + dx), (lasty + dy));

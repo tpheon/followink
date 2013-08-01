@@ -12,34 +12,18 @@ font-family:"Arial", Helvetica, sans-serif;
 .centered{
 margin: 0 auto;
 }
+.icon{
+	margin: 0 auto;
+	width: 400px;
+	height: 400px;
+}
 .mainscreen
 {
     position:relative;
     left:94px;
 }
-.slid{
-    position:relative;
-    left:60px;
-    width:400px;
-}
-.thumbnail
-{
-    float:left;
-    width:100px;
-    height:100px;
-    position:relative;
-    left:-60px;
-    margin:10px; 
-    z-index: 2;
-}
-.under
-{
-    position:relative;
-    left:-400px;
-    top:+10px;
-    margin:10px;
-    width:100px;
-    height:100px;
+.inpopup{
+	margin: 10px 10px 10px 10px;
 }
 .overmap{
     position:absolute;

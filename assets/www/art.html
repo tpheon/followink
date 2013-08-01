@@ -22,30 +22,29 @@
 	<div data-role="page" id="sport" class="page-map">
 	
 		<div data-role="header">
-			<h1>Sport Mode</h1>
+			<h1>Art Mode</h1>
 		</div>
-		
 		<div data-role="content" id="cont">
 			<div class="map-canvas" id="map-canvas"></div>
 			<div id="canv"></div>
-    		<div align="center" data-role="controlgroup" data-type="horizontal">
-			<!--Stop-->
-			<button id="toggle" type="button">Point</button>
-			<button id="stop" type="button">Stop</button>
-			<!--Settings-->
-			<a href="#settingsmenu" data-rel="popup" data-role="button"><div class="label">Settings</div></a>
+		</div>
+		<div data-role="footer">
+			<div align="center" data-role="controlgroup" data-type="horizontal">
+				<!--Stop-->
+				<button id="toggle" type="button">Point</button>
+				<button id="stop" type="button">Stop</button>
+				<!--Settings-->
+				<a href="#settingsmenu" data-rel="popup" data-role="button">
+					<div class="label">Settings</div></a>
 				<div data-role="popup" id="settingsmenu">
-					<div data-role="collapsible-set" data-theme="b" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3>File Name</h3>
-                        <input type="text" name="file" id="file" value="something"/>
+						<h3>File Name</h3>
+						<input type="text" name="file" id="file" value="something"/>
 						<h3>Stroke Size</h3>
 						<input type="range" name="strokesize" id="strokesize" min="0" max="10" data-highlight="false" data-mini="true">
-					</div>
 				</div>
 			</div>
-			<p id="colorpickerholder"></p>
+			<p id="colorpickerholder" align="center"></p>
 		</div>
-		<div data-role="footer"></div>
 	</div>
 </body>
 </html>

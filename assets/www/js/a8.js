@@ -21,9 +21,13 @@ function setGLocation(position){
     var coord = new google.maps.LatLng(position.coords.latitude,
         position.coords.longitude);
     var w = parseInt($('#strokesize').val());
-    session.push(new map_point(coord,"000",w));
+    var c = $("#hex").val();
+    if(c == null){
+        c = "000";
+    }
+    console.log(c);
+    session.push(new map_point(coord,c,w));
     sessionStorage.session = JSON.stringify(session);
-    console.log(coord);
 }
 
 function parseGLoc(){
@@ -56,6 +60,7 @@ function draw_initialize(position) {
         position.coords.longitude);
     var session = [];
     var d = new Date();
+    $('#colorpickerholder').ColorPickerSetColor("#000000");
     $('#strokesize').val(1);
     $('#file').val(d.toLocaleDateString() + ", " + d.toLocaleTimeString());
     session.push(new map_point(point1,"000",1));
@@ -80,17 +85,18 @@ function map_initialize(set, drawing){
     var map = new google.maps.Map(document.getElementById("map-canvas"),
         mapOptions);
     $(document).ready(function(){
+        
         var w = $('#cont').width();
-        w = Math.floor(.8*w);
+        var h = $('#cont').height();
         $('#map-canvas').width(w);
-        var h = $('#map-canvas').height();
+        $('#map-canvas').height(h);
+        console.log(h + " " +w);
         var cstr = "<canvas id=\"mapvas\" width=\""+w+"\" height=\""+h+
             "\"class=\"overmap\"></canvas>";
             document.getElementById("canv").innerHTML = cstr;
         $('#mapvas').width(w);
-        $('#mapvas').height($('#map-canvas').height());
+        $('#mapvas').height(h);
         $('#mapvas').offset($('#map-canvas').offset());
-        //console.log($('#mapvas').height());
         pinit();
     });
     if(drawing){
@@ -101,19 +107,16 @@ function map_initialize(set, drawing){
         $("#toggle").off("click");
         $("#toggle").on("click", function(){
             storeGLocation2();
-            console.log("pointed");
             draw2(map,JSON.parse(sessionStorage.session));
         });
     }
     else{
-        console.log("loaded");
         draw2(map,set);
     }
 }
 
 function g_init(){
     pinit();
-    console.log(sessionStorage.map);
     var GLoc = Parse.Object.extend("GLoc");
     var query = new Parse.Query(GLoc);
     var set;
@@ -130,7 +133,6 @@ function g_init(){
 }
 
 function draw2(map,set){
-    console.log(set);
     var numTiles = 1 << map.getZoom();
     var projection = new MercatorProjection();
     var mapvas = document.getElementById("mapvas");

@@ -1,7 +1,6 @@
 function load_maps(){
     pinit();
     $('#user').val("Isaac");
-    console.log('init');
     $('#tog').on('click',function(){
         set_user();
         document.getElementById("prompt").innerHTML = "Hello " + sessionStorage.user;
@@ -9,7 +8,6 @@ function load_maps(){
         var GLoc = Parse.Object.extend("GLoc");
         var query = new Parse.Query(GLoc);
         var content = "";
-        console.log(sessionStorage.user);
         query.equalTo('user',sessionStorage.user);
         query.find({
             success: function(results) {
@@ -22,7 +20,6 @@ function load_maps(){
     			$("#sbox").hide().show();
     			$("#selector").change(function(){
     			    sessionStorage.map = $("#selector").val();
-    			    console.log(sessionStorage.map);
     			});
             },
             error: function(results, error) {

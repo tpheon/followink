@@ -205,3 +205,7 @@ function draw_on_google_map(map){
       }
     });
 }
+
+function colorpickerStart(){
+		$('#colorpickerholder').ColorPicker({flat: true});
+}

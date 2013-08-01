@@ -1,5 +1,6 @@
 function load_maps(){
     pinit();
+    $('#user').val("Isaac");
     console.log('init');
     $('#tog').on('click',function(){
         set_user();

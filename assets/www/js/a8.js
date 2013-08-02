@@ -35,8 +35,9 @@ function parseGLoc(){
     var loc = new GLoc();
     console.log("something");
     loc.set("JSON_path",sessionStorage.session);
-    loc.set("color","000");
-    loc.set("user",sessionStorage.user);
+    if(sessionStorage.user != null){
+        loc.set("user",sessionStorage.user);
+    }else{loc.set("user","Isaac")}
     loc.set("title",$("#file").val());
     loc.save(null, {
         success: function(loc) {
